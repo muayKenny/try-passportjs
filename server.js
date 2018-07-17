@@ -6,6 +6,14 @@ var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var env = require('dotenv').load();
+var exphbs = require('express-handlebars');
+
+//For Handlebars
+app.set('views', './app/views')
+app.engine('hbs', exphbs({
+    extname: '.hbs'
+}));
+app.set('view engine', '.hbs');
 
 // for bodyparse
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,7 +32,10 @@ app.get('/', function(req, res) {
 
 //Models
 var models = require("./app/models");
- 
+
+//Routes
+var authRoute = require('./app/routes/auth.js')(app);
+
 //Sync Database
 models.sequelize.sync().then(function() {
  
@@ -36,7 +47,7 @@ models.sequelize.sync().then(function() {
  
 });
 
-app.listen(5000, function(err) {
+app.listen(3000, function(err) {
     if (!err)
         console.log("site is live");
     else console.log(err)
