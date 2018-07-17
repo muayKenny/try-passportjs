@@ -22,6 +22,20 @@ app.get('/', function(req, res) {
     res.send('Welcome to Passport with Sequelize');
 });
 
+//Models
+var models = require("./app/models");
+ 
+//Sync Database
+models.sequelize.sync().then(function() {
+ 
+    console.log('Nice! Database looks fine')
+ 
+}).catch(function(err) {
+ 
+    console.log(err, "Something went wrong with the Database Update!")
+ 
+});
+
 app.listen(5000, function(err) {
     if (!err)
         console.log("site is live");
